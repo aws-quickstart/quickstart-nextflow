@@ -1,0 +1,27 @@
+[
+    {
+        "ParameterKey": "S3BucketName",
+        "ParameterValue": "devspacepaul"
+    },
+    {
+        "ParameterKey": "KeyPairName",
+        "ParameterValue": "EU_PaulWebServerKeyPair"
+    },
+    {
+        "ParameterKey": "StartingScratchVolumeSize",
+        "ParameterValue": "50"
+    },
+    {
+        "ParameterKey": "NextflowContainerImage",
+        "ParameterValue": ""
+    },
+    {
+        "ParameterKey": "S3NextflowWorkDirPrefix",
+        "ParameterValue": "nfworkdir"
+    },
+    {
+        "ParameterKey": "S3NextflowScriptPrefix",
+        "ParameterValue": "nfscripts"
+    }
+]
+

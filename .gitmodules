@@ -1,0 +1,3 @@
+[submodule "submodules/aws-genomics-workflows"]
+	path = submodules/aws-genomics-workflows
+	url = git@github.com:aws-samples/aws-genomics-workflows.git
