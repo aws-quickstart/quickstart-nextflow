@@ -2,7 +2,7 @@ global:
   marketplace-ami: false
   owner: quickstart-eng@amazon.com
   qsname: quickstart-nextflow
-  s3bucket: paulu-hclscollab-taskcat-bucket
+  #s3bucket: paulu-hclscollab-taskcat-bucket
   regions:
     - eu-west-1
   reporting: true
