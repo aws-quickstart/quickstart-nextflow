@@ -1,19 +1,19 @@
 [
     {
-        "ParameterKey": "S3BucketName",
-        "ParameterValue": "devspacepaul"
+        "ParameterKey": "AvailabilityZones",
+        "ParameterValue": "$[taskcat_genaz_2]"
+    },
+    {
+        "ParameterKey": "S3DataBucketName",
+        "ParameterValue": "$[taskcat_autobucket]"
     },
     {
         "ParameterKey": "KeyPairName",
-        "ParameterValue": "EU_PaulWebServerKeyPair"
+        "ParameterValue": "paulu-hclscollab-taskcat"
     },
     {
-        "ParameterKey": "StartingScratchVolumeSize",
-        "ParameterValue": "50"
-    },
-    {
-        "ParameterKey": "NextflowContainerImage",
-        "ParameterValue": ""
+        "ParameterKey": "S3NextflowBucketName",
+        "ParameterValue": "$[taskcat_autobucket]"
     },
     {
         "ParameterKey": "S3NextflowWorkDirPrefix",
@@ -22,6 +22,18 @@
     {
         "ParameterKey": "S3NextflowScriptPrefix",
         "ParameterValue": "nfscripts"
+    },
+    {
+        "ParameterKey": "NextflowContainerImage",
+        "ParameterValue": ""
+    },
+    {
+        "ParameterKey": "QSS3BucketName",
+        "ParameterValue": "$[taskcat_autobucket]"
+    },
+    {
+        "ParameterKey": "QSS3KeyPrefix",
+        "ParameterValue": "quickstart-nextflow/"
     }
 ]
 
