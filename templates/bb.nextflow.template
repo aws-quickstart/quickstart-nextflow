@@ -200,7 +200,6 @@ Parameters:
     Type: 'AWS::SSM::Parameter::Value<String>' 
     
 Resources:
-
   NotebookSecurityGroup: 
     Type: "AWS::EC2::SecurityGroup"
     Properties: 
@@ -275,6 +274,10 @@ Resources:
                 Action: "*"
                 Resource: !Sub "arn:aws:s3:::${S3BucketName}"
 
+
+
+
+
   NextflowStack:
     Type: AWS::CloudFormation::Stack
     DependsOn:
@@ -343,17 +346,21 @@ Resources:
 Outputs:
   GenomicsEnvS3Bucket:
     Value: !Sub ${S3Stack.Outputs.BucketName}
+    Description: "Location of the S3 bucket nextflow will use as the working directory for files."
     Export:
         Name: !Sub "${AWS::StackName}-Genomics-S3Bucket"
   GenomicsEnvBatchJobRoleArn:
     Value: !Sub ${IamStack.Outputs.BatchJobRoleArn}
+    Description: "Role that batch jobs will run with."
     Export:
         Name: !Sub "${AWS::StackName}-Genomics-BatchJobRoleArn"
   GenomicsEnvDefaultJobQueueArn:
     Value: !Sub ${BatchStack.Outputs.DefaultJobQueueArn}
+    Description: "ARN of the default queue (uses spot instances) where you submit jobs."
     Export:
         Name: !Sub "${AWS::StackName}-Genomics-DefaultJobQueueArn"
   GenomicsEnvHighPriorityJobQueueArn:
     Value: !Sub ${BatchStack.Outputs.HighPriorityJobQueueArn}
+    Description: "ARN of the high priority queue (uses on-demand instances) where you submit jobs."
     Export:
         Name: !Sub "${AWS::StackName}-Genomics-HighPriorityJobQueueArn"

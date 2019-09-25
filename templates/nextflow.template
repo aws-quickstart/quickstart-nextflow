@@ -8,14 +8,14 @@ Metadata:
   AWS::CloudFormation::Interface:
     ParameterGroups:
       - Label:
-          default: "Required"
+          default: "Bucket, AZ, and KeyPair (required)"
         Parameters:
           - S3DataBucketName
           - ExistingDataBucket
           - KeyPairName
           - AvailabilityZones
       - Label:
-          default: "AWS Batch"
+          default: "AWS Batch (optional)"
         Parameters:
           - SpotBidPercentage
           - DefaultCEMinvCpus
@@ -23,7 +23,7 @@ Metadata:
           - HighPriorityCEMinvCpus
           - HighPriorityCEMaxvCpus
       - Label:
-          default: "Nextflow Resources"
+          default: "Nextflow Resources (optional)"
         Parameters:
           - NextflowContainerImage
           - S3NextflowBucketName
