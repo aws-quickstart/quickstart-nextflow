@@ -14,6 +14,9 @@ Metadata:
           - ExistingBucket
           - S3NextflowScriptPrefix
           - S3NextflowWorkDirPrefix
+          - S3NextflowPrefix
+          - S3LogsDirPrefix
+          - S3WorkDirPrefix
       - Label:
           default: Tags 
         Parameters:
@@ -74,6 +77,25 @@ Metadata:
         default: Location to mount scratch point
 
 Parameters:
+
+ S3NextflowPrefix:
+    Type: String
+    Description: >-
+      (Optional) Parent folder in the Nextflow metadata bucket for metadata folders.
+      Used only if the Nextflow metadata bucket is the same as the Data bucket.
+    Default: _nextflow
+  S3LogsDirPrefix:
+    Type: String
+    Description: >-
+      (Optional) Folder in the Nextflow metadata bucket (under the {Nextflow Prefix} if needed)
+      for session cache and logs.
+    Default: logs
+  S3WorkDirPrefix:
+    Type: String
+    Description: >-
+      (Optional) Folder in the Nextflow metadata bucket (under the {Nextflow Prefix} if needed)
+      that contains workflow intermediate results
+    Default: runs
   NotebookSubnet:
     Description: The ID of the public subnet you want to use for the Jupyter notebook nodes. This must be a subnet of the VPC you specify with the VPC ID parameter.
     Type: 'AWS::SSM::Parameter::Value<AWS::EC2::Subnet::Id>'
@@ -233,9 +255,9 @@ Resources:
             Fn::Base64: !Sub |
           
               mkdir /home/ec2-user/SageMaker/nextflowbatchhelper
-              curl https://s3.amazonaws.com/${QSS3BucketName}/${QSS3KeyPrefix}submodules/quickstart-nextflow/src/scripts/nextflow/nf-core-rnaseq-example.ipynb -o /home/ec2-user/SageMaker/nf-core-rnaseq-example.ipynb
-              curl https://s3.amazonaws.com/${QSS3BucketName}/${QSS3KeyPrefix}submodules/quickstart-nextflow/src/scripts/nextflow/nextflowbatchhelper/tailCloudwatch.py -o /home/ec2-user/SageMaker/nextflowbatchhelper/tailCloudwatch.py
-              curl https://s3.amazonaws.com/${QSS3BucketName}/${QSS3KeyPrefix}submodules/quickstart-nextflow/src/scripts/nextflow/nextflowbatchhelper/bb.nextflow.diagram.png -o /home/ec2-user/SageMaker/nextflowbatchhelper/bb.nextflow.diagram.png
+              curl https://s3.amazonaws.com/${QSS3BucketName}/${QSS3KeyPrefix}submodules/quickstart-nextflow/scripts/nextflow/nf-core-rnaseq-example.ipynb -o /home/ec2-user/SageMaker/nf-core-rnaseq-example.ipynb
+              curl https://s3.amazonaws.com/${QSS3BucketName}/${QSS3KeyPrefix}submodules/quickstart-nextflow/scripts/nextflow/nextflowbatchhelper/tailCloudwatch.py -o /home/ec2-user/SageMaker/nextflowbatchhelper/tailCloudwatch.py
+              curl https://s3.amazonaws.com/${QSS3BucketName}/${QSS3KeyPrefix}submodules/quickstart-nextflow/scripts/nextflow/nextflowbatchhelper/bb.nextflow.diagram.png -o /home/ec2-user/SageMaker/nextflowbatchhelper/bb.nextflow.diagram.png
               
               jobQueueArn="${BatchStack.Outputs.DefaultJobQueueArn}"
               jobQueueName=$(cut -d "/" -f 2 <<< $jobQueueArn)
@@ -283,20 +305,26 @@ Resources:
     DependsOn:
       - BatchStack
     Properties:
-      TemplateURL: !Sub https://s3.amazonaws.com/${QSS3BucketName}/${QSS3KeyPrefix}submodules/quickstart-nextflow/src/templates/nextflow/nextflow-resources.template.yaml
+      TemplateURL: !Sub https://s3.amazonaws.com/${QSS3BucketName}/${QSS3KeyPrefix}submodules/quickstart-nextflow/submodules/aws-genomics-workflows/src/templates/nextflow/nextflow-resources.template.yaml
       Parameters:
         S3DataBucketName: !Ref S3BucketName
         S3NextflowBucketName: !Ref S3BucketName
         ExistingBucket: !Ref ExistingBucket
         S3WorkDirPrefix: !Ref S3NextflowWorkDirPrefix
+        
+        
         S3ScriptPrefix: !Ref S3NextflowScriptPrefix
+        
+        
+        
+        
         NextflowContainerImage: !Ref NextflowContainerImage
         BatchDefaultJobQueue: !GetAtt BatchStack.Outputs.DefaultJobQueueArn
 
   S3Stack:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: !Sub https://s3.amazonaws.com/${QSS3BucketName}/${QSS3KeyPrefix}submodules/quickstart-nextflow/src/templates/aws-genomics-s3.template.yaml
+      TemplateURL: !Sub https://s3.amazonaws.com/${QSS3BucketName}/${QSS3KeyPrefix}submodules/quickstart-nextflow/submodules/aws-genomics-workflows/src/templates/aws-genomics-s3.template.yaml
       TimeoutInMinutes: 5
       Parameters:
         S3BucketName: !Ref S3BucketName
@@ -306,7 +334,7 @@ Resources:
     Type: AWS::CloudFormation::Stack
     DependsOn: S3Stack
     Properties:
-      TemplateURL: !Sub https://s3.amazonaws.com/${QSS3BucketName}/${QSS3KeyPrefix}submodules/quickstart-nextflow/src/templates/aws-genomics-iam.template.yaml
+      TemplateURL: !Sub https://s3.amazonaws.com/${QSS3BucketName}/${QSS3KeyPrefix}submodules/quickstart-nextflow/submodules/aws-genomics-workflows/src/templates/aws-genomics-iam.template.yaml
       TimeoutInMinutes: 10
       Parameters:
         S3BucketName: !Ref S3BucketName
@@ -314,7 +342,7 @@ Resources:
   LaunchTplStack:
     Type: AWS::CloudFormation::Stack
     Properties:
-      TemplateURL: !Sub https://s3.amazonaws.com/${QSS3BucketName}/${QSS3KeyPrefix}submodules/quickstart-nextflow/src/templates/aws-genomics-launch-template.template.yaml
+      TemplateURL: !Sub https://s3.amazonaws.com/${QSS3BucketName}/${QSS3KeyPrefix}submodules/quickstart-nextflow/submodules/aws-genomics-workflows/src/templates/aws-genomics-launch-template.template.yaml
       Parameters:
         WorkflowOrchestrator: nextflow
         ScratchVolumeSize: !Ref StartingScratchVolumeSize
@@ -326,11 +354,10 @@ Resources:
       - IamStack
       - LaunchTplStack
     Properties:
-      TemplateURL: !Sub https://s3.amazonaws.com/${QSS3BucketName}/${QSS3KeyPrefix}submodules/quickstart-nextflow/src/templates/aws-genomics-batch.template.yaml
+      TemplateURL: !Sub https://s3.amazonaws.com/${QSS3BucketName}/${QSS3KeyPrefix}submodules/quickstart-nextflow/submodules/aws-genomics-workflows/src/templates/aws-genomics-batch.template.yaml
       TimeoutInMinutes: 10
       Parameters:
         LaunchTemplateId: !Sub ${LaunchTplStack.Outputs.LaunchTemplateId}
-        Ec2KeyPairName: !Ref KeyPairName
         VpcId: !Ref VpcId
         SubnetIds: !Sub "${AppSubnetA},${AppSubnetB}"
         SpotBidPercentage: !Ref SpotBidPercentage
