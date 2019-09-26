@@ -28,7 +28,7 @@ class cloudWatchTail:
                 self.logMessages[hashDigest] = event['message']
                 self.printAndEnrichMessage(event['message'])    
         while 'nextToken' in logs_batch:
-            logs_batch = logClient.get_log_events(logGroupName=group_name, logStreamName=stream, nextToken=logs_batch['nextToken'])
+            logs_batch = logClient.get_log_events(logGroupName=logGroup, logStreamName=logStream, nextToken=logs_batch['nextToken'])
             for event in logs_batch['events']:
                 eventHashObj = hashlib.md5(b"".join([str.encode(str(event['timestamp'])), str.encode(event['message'])]))
                 hashDigest = eventHashObj.hexdigest()
