@@ -312,11 +312,9 @@ Resources:
         ExistingBucket: !Ref ExistingBucket
         S3WorkDirPrefix: !Ref S3NextflowWorkDirPrefix
         
-        
-        S3ScriptPrefix: !Ref S3NextflowScriptPrefix
-        
-        
-        
+        S3NextflowPrefix: !Ref S3NextflowPrefix
+        S3LogsDirPrefix: !Ref S3LogsDirPrefix
+        S3WorkDirPrefix: !Ref S3WorkDirPrefix
         
         NextflowContainerImage: !Ref NextflowContainerImage
         BatchDefaultJobQueue: !GetAtt BatchStack.Outputs.DefaultJobQueueArn
