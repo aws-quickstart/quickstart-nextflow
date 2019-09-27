@@ -13,7 +13,6 @@ Metadata:
           - S3BucketName
           - ExistingBucket
           - S3NextflowScriptPrefix
-          - S3NextflowWorkDirPrefix
           - S3NextflowPrefix
           - S3LogsDirPrefix
           - S3WorkDirPrefix
@@ -78,7 +77,7 @@ Metadata:
 
 Parameters:
 
- S3NextflowPrefix:
+  S3NextflowPrefix:
     Type: String
     Description: >-
       (Optional) Parent folder in the Nextflow metadata bucket for metadata folders.
@@ -191,12 +190,9 @@ Parameters:
     Description: The starting EBS volume size for the scratch space, which provides auto-expanding storage to support unpredictable runtime demands.
     Type: Number
     Default: 200
-  S3NextflowWorkDirPrefix:
-    Type: String
-    Description: >-
-      The parent folder in the S3 bucket that will contain Nextflow working directory (intermediate and output) files. The Quick Start will create this folder for you.
   S3NextflowScriptPrefix:
     Type: String
+    Default: scripts
     Description: >-
       The parent folder in the S3 bucket that will contain Nextflow workflow scripts (*.nf, *.config, etc. files). The Quick Start will create this folder for you. 
   NextflowContainerImage:
@@ -310,12 +306,9 @@ Resources:
         S3DataBucketName: !Ref S3BucketName
         S3NextflowBucketName: !Ref S3BucketName
         ExistingBucket: !Ref ExistingBucket
-        S3WorkDirPrefix: !Ref S3NextflowWorkDirPrefix
-        
         S3NextflowPrefix: !Ref S3NextflowPrefix
         S3LogsDirPrefix: !Ref S3LogsDirPrefix
         S3WorkDirPrefix: !Ref S3WorkDirPrefix
-        
         NextflowContainerImage: !Ref NextflowContainerImage
         BatchDefaultJobQueue: !GetAtt BatchStack.Outputs.DefaultJobQueueArn
 
