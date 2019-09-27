@@ -1,9 +1,5 @@
 [
     {
-        "ParameterKey": "AvailabilityZones",
-        "ParameterValue": "$[taskcat_genaz_2]"
-    },
-    {
         "ParameterKey": "S3DataBucketName",
         "ParameterValue": "$[taskcat_genuuid]"
     },
@@ -14,14 +10,6 @@
     {
         "ParameterKey": "S3NextflowBucketName",
         "ParameterValue": "$[taskcat_genuuid]"
-    },
-    {
-        "ParameterKey": "S3NextflowWorkDirPrefix",
-        "ParameterValue": "nfworkdir"
-    },
-    {
-        "ParameterKey": "S3NextflowScriptPrefix",
-        "ParameterValue": "nfscripts"
     },
     {
         "ParameterKey": "NextflowContainerImage",
