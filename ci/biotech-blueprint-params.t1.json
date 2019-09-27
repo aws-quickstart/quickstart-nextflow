@@ -4,10 +4,6 @@
         "ParameterValue": "$[taskcat_genuuid]"
     },
     {
-        "ParameterKey": "KeyPairName",
-        "ParameterValue": "paulu-hclscollab-taskcat"
-    },
-    {
         "ParameterKey": "S3NextflowBucketName",
         "ParameterValue": "$[taskcat_genuuid]"
     },
