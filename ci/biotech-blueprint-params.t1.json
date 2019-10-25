@@ -1,0 +1,23 @@
+[
+    {
+        "ParameterKey": "S3DataBucketName",
+        "ParameterValue": "$[taskcat_genuuid]"
+    },
+    {
+        "ParameterKey": "S3NextflowBucketName",
+        "ParameterValue": "$[taskcat_genuuid]"
+    },
+    {
+        "ParameterKey": "NextflowContainerImage",
+        "ParameterValue": ""
+    },
+    {
+        "ParameterKey": "QSS3BucketName",
+        "ParameterValue": "$[taskcat_autobucket]"
+    },
+    {
+        "ParameterKey": "QSS3KeyPrefix",
+        "ParameterValue": "quickstart-nextflow/"
+    }
+]
+
