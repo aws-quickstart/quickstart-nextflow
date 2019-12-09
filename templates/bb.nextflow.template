@@ -102,10 +102,6 @@ Metadata:
         default: Private subnet 1 ID
       AppSubnetB:
         default: Private subnet 2 ID
-      StartingScratchVolumeSize:
-        default: Starting size for scratch EBS volumes
-      ScratchMountPoint: 
-        default: Location to mount scratch point
       NextFlowContainerImage: 
         default: Nextflow container image
       QSS3BucketName:
