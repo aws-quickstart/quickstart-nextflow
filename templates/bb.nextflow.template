@@ -43,7 +43,6 @@ Metadata:
           - HighPriorityCEMinvCpus
           - HighPriorityCEMaxvCpus
           - StartingScratchVolumeSize
-          - ScratchMountPoint
       - Label:
           default: Nextflow options
         Parameters:
@@ -63,7 +62,7 @@ Metadata:
       SubnetIds:
         default: VPC Subnet IDs
       S3NextflowPrefix: 
-        default: S3 bucket for Nextflow assets
+        default: S3 Nextflow metadata folder prefix
       S3WorkDirPrefix: 
         default: S3 Nextflow working directory folder prefix
       S3LogsDirPrefix:
@@ -82,8 +81,6 @@ Metadata:
         default: High priority max vCPU
       StartingScratchVolumeSize:
         default: Starting size for scratch EBS volumes 
-      ScratchMountPoint:
-        default: Location to mount scratch point
       OwnerTag:
         default: Owner of this enviornment (used for tagging)
       NameTag:
@@ -231,11 +228,6 @@ Parameters:
     Type: String
     Description: >-
       Optional. The location of your existing container image for Nextflow, if you have one (e.g., “/nextflow:latest”). If you leave this setting blank, the Quick Start will build a container for you. 
-  ScratchMountPoint:
-    Type: String
-    Default: ""
-    Description: >-
-      Path for the scratch mount point in the instance. Leave this blank to use the auto-expanding EBS capability described here https://docs.opendata.aws/genomics-workflows/core-env/create-custom-compute-resources/ .  
   QSS3BucketName:
     Default: /BB/QuickStart/QSS3BucketName
     Description: S3 bucket name for the Quick Start assets. Quick Start bucket name
@@ -369,7 +361,6 @@ Resources:
       Parameters:
         WorkflowOrchestrator: nextflow
         ScratchVolumeSize: !Ref StartingScratchVolumeSize
-        ScratchMountPoint: !Ref ScratchMountPoint
   
   BatchStack:
     Type: AWS::CloudFormation::Stack
