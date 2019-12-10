@@ -7,9 +7,8 @@ Metadata:
   AWS::CloudFormation::Interface:
     ParameterGroups:
       - Label:
-          default: Required Parameters
+          default: Required parameters
         Parameters:
-          - KeyPairName
           - S3BucketName
           - ExistingBucket
           - S3NextflowScriptPrefix
@@ -23,20 +22,20 @@ Metadata:
           - NameTag
           - PurposeTag
       - Label:
-          default: Notebook Options (optional)
+          default: Notebook options
         Parameters:
           - DeployNotebook
           - NotebookInstanceSize
           - NotebookSubnet
           - NotebookStorageSpace
       - Label:
-          default: VPC Info (optional)
+          default: VPC options
         Parameters:
           - VpcId
           - AppSubnetA
           - AppSubnetB
       - Label:
-          default: Optional Batch Configs (optional)
+          default: AWS Batch configuration options
         Parameters:
           - SpotBidPercentage
           - DefaultCEMinvCpus
@@ -44,37 +43,69 @@ Metadata:
           - HighPriorityCEMinvCpus
           - HighPriorityCEMaxvCpus
           - StartingScratchVolumeSize
-          - ScratchMountPoint
       - Label:
-          default: Nextflow Resources (optional)
+          default: Nextflow options
         Parameters:
           - NextflowContainerImage
+      - Label:
+          default: AWS QuickStart configuration
+        Parameters:
+          - QSS3BucketName
+          - QSS3KeyPrefix
     ParameterLabels:
       S3BucketName:
-        default: S3 Bucket Name
+        default: S3 bucket name
       ExistingBucket:
-        default: Existing Bucket?
+        default: Existing bucket?
       VpcId:
         default: VPC ID
       SubnetIds:
         default: VPC Subnet IDs
-      KeyPairName:
-        default: EC2 Key Pair Name
+      S3NextflowPrefix: 
+        default: S3 Nextflow metadata folder prefix
+      S3WorkDirPrefix: 
+        default: S3 Nextflow working directory folder prefix
+      S3LogsDirPrefix:
+        default: S3 Nextflow log folder prefix
+      S3NextflowScriptPrefix:
+        default: S3 Nextflow script folder prefix
       SpotBidPercentage:
-        default: Spot Bid %
+        default: Spot bid %
       DefaultCEMinvCpus:
-        default: Default Min vCPU
+        default: Default min vCPU
       DefaultCEMaxvCpus:
-        default: Default Max vCPU
+        default: Default max vCPU
       HighPriorityCEMinvCpus:
-        default: High Priority Min vCPU
+        default: High priority min vCPU
       HighPriorityCEMaxvCpus:
-        default: High Priority Max vCPU
+        default: High priority max vCPU
       StartingScratchVolumeSize:
         default: Starting size for scratch EBS volumes 
-      ScratchMountPoint:
-        default: Location to mount scratch point
-
+      OwnerTag:
+        default: Owner of this enviornment (used for tagging)
+      NameTag:
+        default: Name for this enviornment (used for tagging)
+      PurposeTag: 
+        default: Purpose for this enviornment (used for tagging)
+      DeployNotebook:
+        default: Include JuptyerLab enviornment
+      NotebookInstanceSize:
+        default: Notebook instance size
+      NotebookSubnet:
+        default: Subnet notebook should run in?
+      NotebookStorageSpace:
+        default: Storage capacity for notebook
+      AppSubnetA:
+        default: Private subnet 1 ID
+      AppSubnetB:
+        default: Private subnet 2 ID
+      NextFlowContainerImage: 
+        default: Nextflow container image
+      QSS3BucketName:
+        default: Quick Start S3 bucket name
+      QSS3KeyPrefix:
+        default: Quick Start S3 key prefix
+        
 Parameters:
 
   S3NextflowPrefix:
@@ -159,9 +190,7 @@ Parameters:
       - Yes
       - No
     Default: Yes
-  KeyPairName:
-    Description: A public/private key pair, which allows you to connect securely to any instances Batch launches.
-    Type: AWS::EC2::KeyPair::KeyName
+
   SpotBidPercentage:
     Description: >-
       The bid percentage set for the AWS Batch managed compute environment with Spot Instances. Specify a value between 1 and 100.
@@ -199,11 +228,6 @@ Parameters:
     Type: String
     Description: >-
       Optional. The location of your existing container image for Nextflow, if you have one (e.g., “/nextflow:latest”). If you leave this setting blank, the Quick Start will build a container for you. 
-  ScratchMountPoint:
-    Type: String
-    Default: ""
-    Description: >-
-      Path for the scratch mount point in the instance. Leave this blank to use the auto-expanding EBS capability described here https://docs.opendata.aws/genomics-workflows/core-env/create-custom-compute-resources/ .  
   QSS3BucketName:
     Default: /BB/QuickStart/QSS3BucketName
     Description: S3 bucket name for the Quick Start assets. Quick Start bucket name
@@ -337,7 +361,6 @@ Resources:
       Parameters:
         WorkflowOrchestrator: nextflow
         ScratchVolumeSize: !Ref StartingScratchVolumeSize
-        ScratchMountPoint: !Ref ScratchMountPoint
   
   BatchStack:
     Type: AWS::CloudFormation::Stack
