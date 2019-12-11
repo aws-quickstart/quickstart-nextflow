@@ -82,13 +82,13 @@ Metadata:
       StartingScratchVolumeSize:
         default: Starting size for scratch EBS volumes 
       OwnerTag:
-        default: Owner of this enviornment (used for tagging)
+        default: Owner of this environment (used for tagging)
       NameTag:
-        default: Name for this enviornment (used for tagging)
+        default: Name for this environment (used for tagging)
       PurposeTag: 
-        default: Purpose for this enviornment (used for tagging)
+        default: Purpose for this environment (used for tagging)
       DeployNotebook:
-        default: Include JuptyerLab enviornment
+        default: Include JuptyerLab environment
       NotebookInstanceSize:
         default: Notebook instance size
       NotebookSubnet:
@@ -99,7 +99,7 @@ Metadata:
         default: Private subnet 1 ID
       AppSubnetB:
         default: Private subnet 2 ID
-      NextFlowContainerImage: 
+      NextflowContainerImage: 
         default: Nextflow container image
       QSS3BucketName:
         default: Quick Start S3 bucket name
