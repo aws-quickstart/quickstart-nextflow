@@ -1,0 +1,19 @@
+project:
+  name: quickstart-nextflow
+  owner: quickstart-eng@amazon.com
+  package_lambda: false
+  regions:
+  - eu-west-1
+  s3_bucket: ''
+tests:
+  exchange2016:
+    parameters:
+      S3DataBucketName: $[taskcat_genuuid]
+      S3NextflowBucketName: $[taskcat_genuuid]
+      NextflowContainerImage: ""
+      QSS3BucketName: $[taskcat_autobucket]
+      QSS3BucketRegion: $[taskcat_current_region]
+    regions:
+    - eu-west-1
+    template: templates/nextflow.template
+
