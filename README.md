@@ -3,7 +3,7 @@
 
 This Quick Start deploys a genomics analysis environment on the Amazon Web Services (AWS) Cloud, using Nextflow to create and orchestrate analysis workflows and AWS Batch to run the workflow processes.
 
-Nextflow is an open-source workflow framework and domain-specific language (DSL) for Linux, developed by the [Comparative Bioinformatics group](https://www.crg.eu/en/programmes-groups/notredame-lab) at the [Barcelona Centre for Genomic Regulation (CRG)](https://www.crg.eu/). The tool enables you to create complex, data-intensive workflow pipeline scripts, and simplifies the implementation and deployment of genomics analysis workflows in the cloud.
+Nextflow is an open-source workflow framework and domain-specific language (DSL) for scientific computing, created in the [Comparative Bioinformatics group](https://www.crg.eu/en/programmes-groups/notredame-lab) at the [Centre for Genomic Regulation (CRG)](https://www.crg.eu/) and supported by [Seqera Labs](https://seqera.io). The tool enables you to create complex, data-intensive workflow pipeline scripts, and simplifies the implementation and deployment of genomics analysis workflows in the cloud.
 
 This Quick Start is for teams or individuals who manage informatics infrastructure and genomics analysis for a biotech company.
 
