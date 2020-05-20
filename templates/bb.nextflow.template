@@ -314,6 +314,9 @@ Resources:
                 Resource: !Sub "arn:aws:s3:::${S3BucketName}/${S3NextflowScriptPrefix}/*"
               - Effect: "Allow"
                 Action: "*"
+                Resource: !Sub "arn:aws:s3:::${S3BucketName}/_nextflow/runs/*"
+              - Effect: "Allow"
+                Action: "*"
                 Resource: !Sub "arn:aws:s3:::${S3BucketName}"
 
 
