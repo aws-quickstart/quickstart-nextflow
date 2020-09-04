@@ -332,7 +332,7 @@ Resources:
       Parameters:
         S3DataBucketName: !Ref S3BucketName
         S3NextflowBucketName: !Ref S3BucketName
-        ExistingBucket: !Ref ExistingBucket
+        ExistingBucket: Yes
         S3NextflowPrefix: !Ref S3NextflowPrefix
         S3LogsDirPrefix: !Ref S3LogsDirPrefix
         S3WorkDirPrefix: !Ref S3WorkDirPrefix
